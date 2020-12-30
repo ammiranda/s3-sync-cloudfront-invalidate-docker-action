@@ -52,7 +52,8 @@ EOF
 sh -c "aws s3 sync ${SOURCE_DIR:-.} s3://${AWS_S3_BUCKET}/${DEST_DIR} \
               --profile s3-sync-action \
               --no-progress \
+              --exact-timestamps \
               ${ENDPOINT_APPEND} $*"
 
 # Invalidate the cloudfront cache using the same profile and suppress verbose messages.
-sh -c "aws --profile s3-sync-action cloudfront create-invalidation --distribution-id \"$AWS_CLOUDFRONT_DISTRO_ID\" --paths \"$AWS_CLOUDFRONT_PATH\" $*"
+sh -c "aws --profile s3-sync-action cloudfront create-invalidation --distribution-id \"$AWS_CLOUDFRONT_DISTRO_ID\" --paths \"$AWS_CLOUDFRONT_PATH\""
